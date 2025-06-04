@@ -1,65 +1,72 @@
-# Starter Template with React Navigation
+# GS - Protech The Future | Mobile
 
-This is a minimal starter template for React Native apps using Expo and React Navigation.
+## Integrantes
 
-It includes the following:
+| Nome                   |   RM   |
+| :--------------------- | :----: |
+| Otavio Miklos Nogueira | 554513 |
+| Luciayla Yumi Kawakami | 557987 |
 
-- Example [Native Stack](https://reactnavigation.org/docs/native-stack-navigator) with a nested [Bottom Tab](https://reactnavigation.org/docs/bottom-tab-navigator)
-- Web support with [React Native for Web](https://necolas.github.io/react-native-web/)
-- TypeScript support and configured for React Navigation
-- Automatic deep link and URL handling configuration
-- Expo [Development Build](https://docs.expo.dev/develop/development-builds/introduction/) with [Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)
-- Edge-to-edge configured on Android with [`react-native-edge-to-edge`](https://www.npmjs.com/package/react-native-edge-to-edge)
+## Links
 
-## Getting Started
+- Youtube: 
 
-1. Create a new project using this template:
+## Descrição 
 
-   ```sh
-   npx create-expo-app@latest --template react-navigation/template
-   ```
+## Instruções
 
-2. Edit the `app.json` file to configure the `name`, `slug`, `scheme` and bundle identifiers (`ios.bundleIdentifier` and `android.bundleIdentifier`) for your app.
+### Instalação
 
-3. Edit the `src/App.tsx` file to start working on your app.
+1. Clone o repositório do projeto:
+   1. HTTPS: `git clone https://github.com/omininola/gs_mobile.git`
+   2. SSH: `git@github.com:omininola/gs_mobile.git`
+2. Entre no diretório do projeto: `cd gs_mobile`
+3. Instale as dependências: `npm install`
 
-## Running the app
+### Incialização
 
-- Install the dependencies:
+#### Rode o projeto: `npm start`
 
-  ```sh
-  npm install
-  ```
+##### Caso tenha um Emulador Android
 
-- Start the development server:
+1. Vá no terminal e pressione `a` para inicializar o emulador
 
-  ```sh
-  npm start
-  ```
+##### Caso não tenha um Emulador Android
 
-- Build and run iOS and Android development builds:
+1. Instale o Expo Go no seu celular
+   1. Android: https://play.google.com/store/apps/details?id=host.exp.exponent
+   2. IOS: https://apps.apple.com/br/app/expo-go/id982107779
+2. Volte no terminal e pressione `s` para mudar de "development build" para "Expo Go"
+3. Leia o QR Code com a câmera do seu celular
 
-  ```sh
-  npm run ios
-  # or
-  npm run android
-  ```
+### Navegação
 
-- In the terminal running the development server, press `i` to open the iOS simulator, `a` to open the Android device or emulator, or `w` to open the web browser.
+O aplicativo possui várias funcionalidades, logo de cara você pode acessar a tela de `Dashboard` para verificar a situação dos nossos sensores que estão acoplados aos drones que detectam fogo.
 
-## Notes
+Aleḿ disso, você pode criar uma nova conta caso não tenha uma, ou entrar em uma conta já existente. Isso te garante acesso as demais páginas, como a de usuário, relatórios e criação de novos relatórios.
 
-This project uses a [development build](https://docs.expo.dev/develop/development-builds/introduction/) and cannot be run with [Expo Go](https://expo.dev/go). To run the app with Expo Go, edit the `package.json` file, remove the `expo-dev-client` package and `--dev-client` flag from the `start` script.
+Aqui estão algumas imagens que representam essas telas
 
-We highly recommend using the development builds for normal development and testing.
+#### Home
 
-The `ios` and `android` folder are gitignored in the project by default as they are automatically generated during the build process ([Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)). This means that you should not edit these folders directly and use [config plugins](https://docs.expo.dev/config-plugins/) instead. However, if you need to edit these folders, you can remove them from the `.gitignore` file so that they are tracked by git.
+![Tela de Entrada](assets/home.jpg)
 
-## Resources
+#### Cadastro
 
-- [React Navigation documentation](https://reactnavigation.org/)
-- [Expo documentation](https://docs.expo.dev/)
+![Tela de Cadastro](assets/register.jpg)
 
----
+#### Login
 
-Demo assets are from [lucide.dev](https://lucide.dev/)
+![Tela de Login](assets/login.jpg)
+
+#### Usuário
+
+![Tela do Usuário](assets/user.jpg)
+
+#### Relatórios
+
+![Tela dos Relatórios](assets/relatorios.jpg)
+
+#### Criar Relatório
+
+![Tela de Criar Relatórios](assets/criar_relatorio.jpg)
