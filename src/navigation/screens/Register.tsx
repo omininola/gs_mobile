@@ -19,6 +19,7 @@ export function Register() {
     if (user) navigation.navigate("MainTabs");
   }, [user])
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [userForm, setUserForm] = useState<UserRegister>({
     nome: "",
@@ -27,6 +28,8 @@ export function Register() {
   });
 
   async function handleSubmit() {
+    setLoading(true);
+
     try {
       const res = await fetch(
         `${API_URL_BASE}/usuarios`,
@@ -54,6 +57,7 @@ export function Register() {
       setMessage("Não foi possível criar o usuário");
       console.log(err);
     } finally {
+      setLoading(false);
       setTimeout(() => {
         setMessage("");
       }, 3000);
@@ -99,8 +103,15 @@ export function Register() {
           onChangeText={(senha) => setUserForm(prev => ({...prev, senha}))}
         />
 
-        <Button color="green" onPress={handleSubmit}>Cadastrar</Button>
-
+        <Button
+          disabled={loading}
+          style={loading && { opacity: .5 }}
+          color={loading ? "gray" : "green"}
+          onPress={loading ? undefined : handleSubmit}
+        >
+          Cadastrar
+        </Button>
+        
         <View style={styles.belowActions}>
           <Button screen="Home">Voltar para a página inicial</Button>
 

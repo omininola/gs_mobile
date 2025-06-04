@@ -16,8 +16,9 @@ export function UserScreen() {
   const { user, setUser } = useUser();
   const navigation = useNavigation();
 
-  const [editModalVisible, setEditModalVisible] = useState(false);
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState<boolean>(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!user) navigation.navigate("Login");
@@ -31,12 +32,22 @@ export function UserScreen() {
   });
 
   async function handleLogout() {
+    setLoading(true);
     await AsyncStorage.setItem("user", "");
     setUser(undefined);
     navigation.navigate("Login");
+    setLoading(false);
   }
 
   async function handleUpdate() {
+    if (!user || !user.id) {
+      setMessage("Usuário inválido para atualizar");
+      setEditModalVisible(false);
+      return;
+    }
+
+    setLoading(true);
+
     try {
       const res = await fetch(
         `${API_URL_BASE}/usuarios/${user?.id}`,
@@ -62,6 +73,7 @@ export function UserScreen() {
       setEditModalVisible(false);
       console.log(err);
     } finally {
+      setLoading(false);
       setTimeout(() => {
         setMessage("");
       }, 3000);
@@ -69,6 +81,14 @@ export function UserScreen() {
   }
 
   async function handleDelete() {
+    if (!user || !user.id) {
+      setMessage("Usuário inválido para excluir");
+      setDeleteModalVisible(false);
+      return;
+    }
+
+    setLoading(true);
+
     try {
       const res = await fetch(
         `${API_URL_BASE}/usuarios/${user?.id}`,
@@ -91,6 +111,7 @@ export function UserScreen() {
       setDeleteModalVisible(false);
       console.log(err);
     } finally {
+      setLoading(false);
       setTimeout(() => {
         setMessage("");
       }, 3000);
@@ -126,7 +147,7 @@ export function UserScreen() {
 
         <View style={styles.actions}>
           <Button onPress={() => setEditModalVisible(true)}>Editar Usuário</Button>
-          <Button onPress={handleLogout} color="gray" >Logout</Button>
+          <Button onPress={handleLogout} color="gray">Logout</Button>
           <Button onPress={() => setDeleteModalVisible(true)} color="red">Excluir Conta</Button>
         </View>
       </Container>
@@ -165,8 +186,23 @@ export function UserScreen() {
               onChangeText={(senha) => setUserForm(prev => ({...prev, senha}))}
             />
 
-            <Button onPress={handleUpdate}>Salvar</Button>
-            <Button onPress={() => setEditModalVisible(false)} color="gray">Cancelar</Button>
+            <Button
+              disabled={loading}
+              style={loading && { opacity: .5 }}
+              color={loading ? "gray" : "green"}
+              onPress={loading ? undefined : handleUpdate}
+            >
+              Salvar
+            </Button>
+
+            <Button
+              disabled={loading}
+              style={loading && { opacity: .5 }}
+              color="gray"
+              onPress={loading ? undefined : () => setEditModalVisible(false)}
+            >
+              Cancelar
+            </Button>
           </View>
         </View>
       </Modal>
@@ -175,8 +211,24 @@ export function UserScreen() {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <DefaultText>Tem certeza que deseja excluir sua conta?</DefaultText>
-            <Button onPress={handleDelete} color="red">Excluir</Button>
-            <Button onPress={() => setDeleteModalVisible(false)}>Cancelar</Button>
+            
+            <Button
+              disabled={loading}
+              style={loading && { opacity: .5 }}
+              color={loading ? "gray" : "red"}
+              onPress={loading ? undefined : handleDelete}
+            >
+              Excluir
+            </Button>
+
+            <Button
+              disabled={loading}
+              style={loading && { opacity: .5 }}
+              color="gray"
+              onPress={loading ? undefined : () => setDeleteModalVisible(false)}
+            >
+              Cancelar
+            </Button>
           </View>
         </View>
       </Modal>

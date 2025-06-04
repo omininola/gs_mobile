@@ -19,6 +19,7 @@ export function Login() {
       if (user) navigation.navigate("MainTabs");
     }, [user])
   
+    const [loading, setLoading] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
     const [userLogin, setUserLogin] = useState<UserLogin>({
       email: "",
@@ -26,6 +27,8 @@ export function Login() {
     });
   
     async function handleSubmit() {
+      setLoading(true);
+
       try {
         const res = await fetch(
           `${API_URL_BASE}/usuarios/login`,
@@ -53,6 +56,7 @@ export function Login() {
         setMessage("Não foi possível entrar com o usuário");
         console.log(err);
       } finally {
+        setLoading(false);
         setTimeout(() => {
           setMessage("");
         }, 3000);
@@ -87,7 +91,14 @@ export function Login() {
           onChangeText={(senha) => setUserLogin(prev => ({...prev, senha}))}
         />
 
-        <Button color="green" onPress={handleSubmit}>Entrar</Button>
+        <Button
+          disabled={loading}
+          style={loading && { opacity: .5 }}
+          color={loading ? "gray" : "green"}
+          onPress={loading ? undefined : handleSubmit}
+        >
+          Entrar
+        </Button>
 
         <View style={styles.belowActions}>
           <Button screen="Home">Voltar para a página inicial</Button>

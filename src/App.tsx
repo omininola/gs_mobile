@@ -8,8 +8,6 @@ import { CitiesProvider } from './context/CitiesContext';
 
 Asset.loadAsync([
   ...NavigationAssets,
-  require('./assets/newspaper.png'),
-  require('./assets/bell.png'),
 ]);
 
 SplashScreen.preventAutoHideAsync();

@@ -14,7 +14,7 @@ import { API_URL_BASE } from "../../libs/api";
 import Title from "../../components/Title";
 
 export function ReportCreateScreen(){
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const navigation = useNavigation();
 
   useEffect(() => {
