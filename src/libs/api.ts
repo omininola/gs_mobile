@@ -1,0 +1,1 @@
+export const API_URL_BASE = "https://gs-java-g2va.onrender.com";

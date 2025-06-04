@@ -1,87 +1,82 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HeaderButton, Text } from '@react-navigation/elements';
 import {
   createStaticNavigation,
   StaticParamList,
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Image } from 'react-native';
-import bell from '../assets/bell.png';
-import newspaper from '../assets/newspaper.png';
 import { Home } from './screens/Home';
-import { Profile } from './screens/Profile';
-import { Settings } from './screens/Settings';
-import { Updates } from './screens/Updates';
 import { NotFound } from './screens/NotFound';
+import { Login } from './screens/Login';
+import { Register } from './screens/Register';
+import { Dashboard } from './screens/Dashboard';
+import { Reports } from './screens/Reports';
+import { ReportCreateScreen } from './screens/ReportCreate';
+import { UserScreen } from './screens/User';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const HomeTabs = createBottomTabNavigator({
+const Tab = createBottomTabNavigator();
+
+export function BottomTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ color, size }) => {
+          let iconName = "user";
+          if (route.name === "Reports") iconName = "list";
+          if (route.name === "ReportCreate") iconName = "plus-square";
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen name="Reports" component={Reports} options={{ title: "Relatórios" }} />
+      <Tab.Screen name="ReportCreate" component={ReportCreateScreen} options={{ title: "Criar" }} />
+      <Tab.Screen name="User" component={UserScreen} options={{ title: "Usuário" }} />
+    </Tab.Navigator>
+  );
+}
+
+const RootStack = createNativeStackNavigator({
   screens: {
     Home: {
       screen: Home,
       options: {
-        title: 'Feed',
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            source={newspaper}
-            tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
-          />
-        ),
-      },
-    },
-    Updates: {
-      screen: Updates,
-      options: {
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            source={bell}
-            tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
-          />
-        ),
-      },
-    },
-  },
-});
-
-const RootStack = createNativeStackNavigator({
-  screens: {
-    HomeTabs: {
-      screen: HomeTabs,
-      options: {
         title: 'Home',
-        headerShown: false,
+        headerShown: false
+      }
+    },
+
+    Login: {
+      screen: Login,
+      options: {
+        title: 'Login',
+        headerShown: false
       },
     },
-    Profile: {
-      screen: Profile,
-      linking: {
-        path: ':user(@[a-zA-Z0-9-_]+)',
-        parse: {
-          user: (value) => value.replace(/^@/, ''),
-        },
-        stringify: {
-          user: (value) => `@${value}`,
-        },
+
+    Register: {
+      screen: Register,
+      options: {
+        title: 'Cadastre-se',
+        headerShown: false
+      }
+    },
+
+    Dashboard: {
+      screen: Dashboard,
+      options: {
+        title: 'Dashboard',
+        headerShown: false
       },
     },
-    Settings: {
-      screen: Settings,
-      options: ({ navigation }) => ({
-        presentation: 'modal',
-        headerRight: () => (
-          <HeaderButton onPress={navigation.goBack}>
-            <Text>Close</Text>
-          </HeaderButton>
-        ),
-      }),
+
+    MainTabs: {
+      screen: BottomTabs,
+      options: {
+        headerShown: false
+      }
     },
+
     NotFound: {
       screen: NotFound,
       options: {
