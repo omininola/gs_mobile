@@ -5,8 +5,7 @@ import { StyleSheet, TextProps } from "react-native";
 export default function DefaultText({
   children,
   ...props
-}: PropsWithChildren & TextProps
-){
+}: PropsWithChildren & TextProps) {
   return (
     <Text style={[style.text, props.style]} {...props}>
       {children}
@@ -17,6 +16,6 @@ export default function DefaultText({
 const style = StyleSheet.create({
   text: {
     fontSize: 20,
-    textAlign: "justify"
-  }
+    textAlign: "justify",
+  },
 });

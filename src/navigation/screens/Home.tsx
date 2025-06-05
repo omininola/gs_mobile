@@ -1,11 +1,11 @@
-import { ScrollView, StatusBar, StyleSheet, View } from 'react-native';
-import Banner from '../../components/Banner';
-import Container from '../../components/Container';
-import DefaultText from '../../components/DefaultText';
-import { Button } from '@react-navigation/elements';
-import { useUser } from '../../context/UserContext';
-import { useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import Banner from "../../components/Banner";
+import Container from "../../components/Container";
+import DefaultText from "../../components/DefaultText";
+import { Button } from "@react-navigation/elements";
+import { useUser } from "../../context/UserContext";
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export function Home() {
   const { user } = useUser();
@@ -13,7 +13,7 @@ export function Home() {
 
   useEffect(() => {
     if (user) navigation.navigate("MainTabs");
-  }, [user])
+  }, [user]);
 
   return (
     <ScrollView>
@@ -24,8 +24,8 @@ export function Home() {
 
       <Container>
         <DefaultText>
-          Ajude a nossa comunidade a encontrar incêndios e queimadas, relate esses
-          acidentes e previna um estrago ainda maior pro nosso planeta!
+          Ajude a nossa comunidade a encontrar incêndios e queimadas, relate
+          esses acidentes e previna um estrago ainda maior pro nosso planeta!
         </DefaultText>
 
         <View style={styles.cta}>
@@ -36,8 +36,8 @@ export function Home() {
         </View>
 
         <DefaultText>
-          Veja também a situação dos nosso sensores espalhados
-          pelas zonas de risco pelo nosso Dashboard
+          Veja também a situação dos nosso sensores espalhados pelas zonas de
+          risco pelo nosso Dashboard
         </DefaultText>
         <Button screen="Dashboard">Ir para o Dashboard</Button>
       </Container>

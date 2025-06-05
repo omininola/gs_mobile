@@ -23,12 +23,12 @@ export function UserScreen() {
   useEffect(() => {
     if (!user) navigation.navigate("Login");
   }, [user]);
-  
+
   const [message, setMessage] = useState<string>("");
   const [userForm, setUserForm] = useState<UserRegister>({
     nome: user?.nome || "",
     email: user?.email || "",
-    senha: user?.senha || ""
+    senha: user?.senha || "",
   });
 
   async function handleLogout() {
@@ -49,26 +49,23 @@ export function UserScreen() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `${API_URL_BASE}/usuarios/${user?.id}`,
-        {
-          method: "PUT",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(userForm)
-        }
-      );
+      const res = await fetch(`${API_URL_BASE}/usuarios/${user?.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userForm),
+      });
 
       if (res.ok) {
         setMessage("Seu usuário foi atualizado com sucesso!");
-        
+
         const data: User = await res.json();
         await AsyncStorage.setItem("user", JSON.stringify(data));
         setUser(data);
         setEditModalVisible(false);
       }
-    } catch(err) {
+    } catch (err) {
       setMessage("Não foi possível atualizar seu usuário");
       setEditModalVisible(false);
       console.log(err);
@@ -90,15 +87,14 @@ export function UserScreen() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `${API_URL_BASE}/usuarios/${user?.id}`,
-        {
-          method: "DELETE"
-        }
-      );
+      const res = await fetch(`${API_URL_BASE}/usuarios/${user?.id}`, {
+        method: "DELETE",
+      });
 
       if (res.ok) {
-        setMessage("Seu usuário foi excluido com sucesso! Você será redirecionado para a página de Login em breve");
+        setMessage(
+          "Seu usuário foi excluido com sucesso! Você será redirecionado para a página de Login em breve"
+        );
         await AsyncStorage.setItem("user", "");
         setUser(undefined);
         setDeleteModalVisible(false);
@@ -106,7 +102,7 @@ export function UserScreen() {
       } else {
         throw new Error(await res.text());
       }
-    } catch(err) {
+    } catch (err) {
       setMessage("Não foi possível excluir seu usuário");
       setDeleteModalVisible(false);
       console.log(err);
@@ -141,14 +137,22 @@ export function UserScreen() {
 
           <View style={styles.userInfoField}>
             <Icon name="list" size={24} />
-            <DefaultText>Relatórios feitos: {user?.relatorios.length}</DefaultText>
+            <DefaultText>
+              Relatórios feitos: {user?.relatorios.length}
+            </DefaultText>
           </View>
         </View>
 
         <View style={styles.actions}>
-          <Button onPress={() => setEditModalVisible(true)}>Editar Usuário</Button>
-          <Button onPress={handleLogout} color="gray">Logout</Button>
-          <Button onPress={() => setDeleteModalVisible(true)} color="red">Excluir Conta</Button>
+          <Button onPress={() => setEditModalVisible(true)}>
+            Editar Usuário
+          </Button>
+          <Button onPress={handleLogout} color="gray">
+            Logout
+          </Button>
+          <Button onPress={() => setDeleteModalVisible(true)} color="red">
+            Excluir Conta
+          </Button>
         </View>
       </Container>
 
@@ -156,14 +160,16 @@ export function UserScreen() {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <DefaultText>Editar Usuário</DefaultText>
-            
+
             <Input
               label="Nome"
               value={userForm.nome}
               placeholder="Digite seu nome"
               autoCapitalize="words"
               autoComplete="name"
-              onChangeText={(nome) => setUserForm(prev => ({...prev, nome}))}
+              onChangeText={(nome) =>
+                setUserForm((prev) => ({ ...prev, nome }))
+              }
             />
 
             <Input
@@ -173,7 +179,9 @@ export function UserScreen() {
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
-              onChangeText={(email) => setUserForm(prev => ({...prev, email}))}
+              onChangeText={(email) =>
+                setUserForm((prev) => ({ ...prev, email }))
+              }
             />
 
             <Input
@@ -183,12 +191,14 @@ export function UserScreen() {
               secureTextEntry
               autoCapitalize="none"
               autoComplete="password"
-              onChangeText={(senha) => setUserForm(prev => ({...prev, senha}))}
+              onChangeText={(senha) =>
+                setUserForm((prev) => ({ ...prev, senha }))
+              }
             />
 
             <Button
               disabled={loading}
-              style={loading && { opacity: .5 }}
+              style={loading && { opacity: 0.5 }}
               color={loading ? "gray" : "green"}
               onPress={loading ? undefined : handleUpdate}
             >
@@ -197,7 +207,7 @@ export function UserScreen() {
 
             <Button
               disabled={loading}
-              style={loading && { opacity: .5 }}
+              style={loading && { opacity: 0.5 }}
               color="gray"
               onPress={loading ? undefined : () => setEditModalVisible(false)}
             >
@@ -211,10 +221,10 @@ export function UserScreen() {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <DefaultText>Tem certeza que deseja excluir sua conta?</DefaultText>
-            
+
             <Button
               disabled={loading}
-              style={loading && { opacity: .5 }}
+              style={loading && { opacity: 0.5 }}
               color={loading ? "gray" : "red"}
               onPress={loading ? undefined : handleDelete}
             >
@@ -223,7 +233,7 @@ export function UserScreen() {
 
             <Button
               disabled={loading}
-              style={loading && { opacity: .5 }}
+              style={loading && { opacity: 0.5 }}
               color="gray"
               onPress={loading ? undefined : () => setDeleteModalVisible(false)}
             >
@@ -239,13 +249,13 @@ export function UserScreen() {
 const styles = StyleSheet.create({
   userInfoContainer: {
     marginVertical: 8,
-    gap: 8
+    gap: 8,
   },
 
   userInfoField: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4    
+    gap: 4,
   },
 
   modalContainer: {
@@ -265,6 +275,6 @@ const styles = StyleSheet.create({
 
   actions: {
     marginVertical: 8,
-    gap: 8
-  }
+    gap: 8,
+  },
 });

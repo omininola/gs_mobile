@@ -1,18 +1,18 @@
 import {
   createStaticNavigation,
   StaticParamList,
-} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home } from './screens/Home';
-import { NotFound } from './screens/NotFound';
-import { Login } from './screens/Login';
-import { Register } from './screens/Register';
-import { Dashboard } from './screens/Dashboard';
-import { Reports } from './screens/Reports';
-import { ReportCreateScreen } from './screens/ReportCreate';
-import { UserScreen } from './screens/User';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome';
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Home } from "./screens/Home";
+import { NotFound } from "./screens/NotFound";
+import { Login } from "./screens/Login";
+import { Register } from "./screens/Register";
+import { Dashboard } from "./screens/Dashboard";
+import { Reports } from "./screens/Reports";
+import { ReportCreateScreen } from "./screens/ReportCreate";
+import { UserScreen } from "./screens/User";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,9 +29,21 @@ export function BottomTabs() {
         },
       })}
     >
-      <Tab.Screen name="Reports" component={Reports} options={{ title: "Relatórios" }} />
-      <Tab.Screen name="ReportCreate" component={ReportCreateScreen} options={{ title: "Criar" }} />
-      <Tab.Screen name="User" component={UserScreen} options={{ title: "Usuário" }} />
+      <Tab.Screen
+        name="Reports"
+        component={Reports}
+        options={{ title: "Relatórios" }}
+      />
+      <Tab.Screen
+        name="ReportCreate"
+        component={ReportCreateScreen}
+        options={{ title: "Criar" }}
+      />
+      <Tab.Screen
+        name="User"
+        component={UserScreen}
+        options={{ title: "Usuário" }}
+      />
     </Tab.Navigator>
   );
 }
@@ -41,49 +53,49 @@ const RootStack = createNativeStackNavigator({
     Home: {
       screen: Home,
       options: {
-        title: 'Home',
-        headerShown: false
-      }
+        title: "Home",
+        headerShown: false,
+      },
     },
 
     Login: {
       screen: Login,
       options: {
-        title: 'Login',
-        headerShown: false
+        title: "Login",
+        headerShown: false,
       },
     },
 
     Register: {
       screen: Register,
       options: {
-        title: 'Cadastre-se',
-        headerShown: false
-      }
+        title: "Cadastre-se",
+        headerShown: false,
+      },
     },
 
     Dashboard: {
       screen: Dashboard,
       options: {
-        title: 'Dashboard',
-        headerShown: false
+        title: "Dashboard",
+        headerShown: false,
       },
     },
 
     MainTabs: {
       screen: BottomTabs,
       options: {
-        headerShown: false
-      }
+        headerShown: false,
+      },
     },
 
     NotFound: {
       screen: NotFound,
       options: {
-        title: '404',
+        title: "404",
       },
       linking: {
-        path: '*',
+        path: "*",
       },
     },
   },

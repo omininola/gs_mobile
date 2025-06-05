@@ -17,7 +17,7 @@ export function Register() {
 
   useEffect(() => {
     if (user) navigation.navigate("MainTabs");
-  }, [user])
+  }, [user]);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
@@ -31,29 +31,28 @@ export function Register() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `${API_URL_BASE}/usuarios`,
-        {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(userForm)
-        }
-      );
-  
+      const res = await fetch(`${API_URL_BASE}/usuarios`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userForm),
+      });
+
       if (res.ok) {
-        setMessage("Cadastro efetuado com sucesso, em breve você será redirecionado para a aba de relatórios!");
-        
+        setMessage(
+          "Cadastro efetuado com sucesso, em breve você será redirecionado para a aba de relatórios!"
+        );
+
         const data: User = await res.json();
         await AsyncStorage.setItem("user", JSON.stringify(data));
         setUser(data);
-        
+
         navigation.navigate("MainTabs");
       } else {
         throw new Error(await res.text());
       }
-    } catch(err) {
+    } catch (err) {
       setMessage("Não foi possível criar o usuário");
       console.log(err);
     } finally {
@@ -80,7 +79,7 @@ export function Register() {
           placeholder="Digite seu nome"
           autoCapitalize="words"
           autoComplete="name"
-          onChangeText={(nome) => setUserForm(prev => ({...prev, nome}))}
+          onChangeText={(nome) => setUserForm((prev) => ({ ...prev, nome }))}
         />
 
         <Input
@@ -90,7 +89,7 @@ export function Register() {
           keyboardType="email-address"
           autoCapitalize="none"
           autoComplete="email"
-          onChangeText={(email) => setUserForm(prev => ({...prev, email}))}
+          onChangeText={(email) => setUserForm((prev) => ({ ...prev, email }))}
         />
 
         <Input
@@ -100,18 +99,18 @@ export function Register() {
           secureTextEntry
           autoCapitalize="none"
           autoComplete="password"
-          onChangeText={(senha) => setUserForm(prev => ({...prev, senha}))}
+          onChangeText={(senha) => setUserForm((prev) => ({ ...prev, senha }))}
         />
 
         <Button
           disabled={loading}
-          style={loading && { opacity: .5 }}
+          style={loading && { opacity: 0.5 }}
           color={loading ? "gray" : "green"}
           onPress={loading ? undefined : handleSubmit}
         >
           Cadastrar
         </Button>
-        
+
         <View style={styles.belowActions}>
           <Button screen="Home">Voltar para a página inicial</Button>
 
@@ -138,5 +137,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 4,
-  }
+  },
 });

@@ -13,13 +13,13 @@ import DefaultText from "../../components/DefaultText";
 import { API_URL_BASE } from "../../libs/api";
 import Title from "../../components/Title";
 
-export function ReportCreateScreen(){
-  const { user, setUser } = useUser();
+export function ReportCreateScreen() {
+  const { user } = useUser();
   const navigation = useNavigation();
 
   useEffect(() => {
     if (!user) navigation.navigate("Login");
-  }, [user])
+  }, [user]);
 
   const { cities } = useCities();
   const [report, setReport] = useState<ReportCreate>({
@@ -27,27 +27,24 @@ export function ReportCreateScreen(){
     usuarioId: user?.id || 0,
     descricao: "",
   });
-  
+
   const [message, setMessage] = useState<string>("");
-  async function handleSubmit(){
+  async function handleSubmit() {
     try {
-      const res = await fetch(
-        `${API_URL_BASE}/relatorios/usuario`, 
-        {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(report)
-        }
-      );
+      const res = await fetch(`${API_URL_BASE}/relatorios/usuario`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(report),
+      });
 
       if (res.ok) {
         setMessage("Relatório criado com sucesso!");
       } else {
         throw new Error(await res.text());
       }
-    } catch(err) {
+    } catch (err) {
       setMessage("Não foi possível criar o relatório");
       console.log(err);
     } finally {
@@ -55,7 +52,7 @@ export function ReportCreateScreen(){
         setMessage("");
       }, 3000);
     }
-  } 
+  }
 
   return (
     <View>
@@ -76,14 +73,18 @@ export function ReportCreateScreen(){
             data={cities}
             placeholder="Selecione uma cidade"
             defaultValue={report.cidadeId}
-            onSelect={(city) => setReport(prev => ({...prev, cidadeId: city.id}))}
+            onSelect={(city) =>
+              setReport((prev) => ({ ...prev, cidadeId: city.id }))
+            }
           />
 
           <Input
             label="Descrição"
             placeholder="Digite a descrição"
             autoCapitalize="none"
-            onChangeText={(descricao) => setReport(prev => ({...prev, descricao}))}
+            onChangeText={(descricao) =>
+              setReport((prev) => ({ ...prev, descricao }))
+            }
           />
 
           <Button onPress={handleSubmit}>Criar Relatório</Button>
@@ -96,6 +97,6 @@ export function ReportCreateScreen(){
 const styles = StyleSheet.create({
   form: {
     marginVertical: 8,
-    gap: 8
-  }
+    gap: 8,
+  },
 });

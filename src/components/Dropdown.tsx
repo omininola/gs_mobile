@@ -12,8 +12,8 @@ export default function Dropdown<T>({
   defaultLabel,
   defaultValue,
 }: {
-  label: keyof T,
-  value: keyof T,
+  label: keyof T;
+  value: keyof T;
   data: T[];
   placeholder?: string;
   onSelect?: (item: T, index: number) => void;
@@ -28,7 +28,9 @@ export default function Dropdown<T>({
         selectedValue={selectedValue}
         onValueChange={(itemValue, itemIndex) => {
           setSelectedValue(itemValue);
-          const selectedItem = data.find((item: T) => item[value] === itemValue);
+          const selectedItem = data.find(
+            (item: T) => item[value] === itemValue
+          );
           if (selectedItem && onSelect) onSelect(selectedItem, itemIndex);
         }}
       >
@@ -37,11 +39,19 @@ export default function Dropdown<T>({
         )}
 
         {defaultLabel && (
-          <Picker.Item key={defaultValue} label={defaultLabel} value={defaultValue} />
+          <Picker.Item
+            key={defaultValue}
+            label={defaultLabel}
+            value={defaultValue}
+          />
         )}
 
         {data.map((item, idx) => (
-          <Picker.Item key={idx} label={item[label] as string} value={item[value]} />
+          <Picker.Item
+            key={idx}
+            label={item[label] as string}
+            value={item[value]}
+          />
         ))}
       </Picker>
     </View>
@@ -52,6 +62,6 @@ const styles = StyleSheet.create({
   pickerContainer: {
     borderWidth: 2,
     borderColor: "#ccc",
-    borderRadius: 50
-  }
+    borderRadius: 50,
+  },
 });

@@ -19,15 +19,15 @@ export function Reports() {
 
   useEffect(() => {
     if (!user) navigation.navigate("Login");
-  }, [user])
+  }, [user]);
 
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  
+
   const [cityFilter, setCityFilter] = useState<string>("");
   const [userFilter, setUserFilter] = useState<boolean>(false);
 
-  async function fetchReports(){
+  async function fetchReports() {
     setLoading(true);
 
     let filter = "";
@@ -50,8 +50,8 @@ export function Reports() {
 
   useEffect(() => {
     fetchReports();
-  }, [cityFilter, userFilter, user])
-  
+  }, [cityFilter, userFilter, user]);
+
   if (loading) {
     return (
       <View>
@@ -96,9 +96,7 @@ export function Reports() {
         <FlatList
           data={reports}
           keyExtractor={({ id }) => id.toString()}
-          renderItem={({ item }) => (
-            <ReportCard report={item} />
-          )}
+          renderItem={({ item }) => <ReportCard report={item} />}
         />
       </Container>
     </View>
@@ -121,7 +119,7 @@ function Filters({
   return (
     <View>
       <DefaultText>Filtros</DefaultText>
-      
+
       <View style={styles.filterSection}>
         <Dropdown<City>
           label="nome"
@@ -133,7 +131,7 @@ function Filters({
           onSelect={(city) => setCityFilter(city.nome)}
         />
 
-        <Button onPress={() => setUserFilter(prev => !prev)}>
+        <Button onPress={() => setUserFilter((prev) => !prev)}>
           {userFilter ? "Todos relatórios" : "Meus relatórios"}
         </Button>
       </View>
@@ -144,6 +142,6 @@ function Filters({
 const styles = StyleSheet.create({
   filterSection: {
     marginVertical: 8,
-    gap: 8
-  }
+    gap: 8,
+  },
 });

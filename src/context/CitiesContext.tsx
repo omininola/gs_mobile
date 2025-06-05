@@ -1,11 +1,17 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
-import { City } from "../libs/types"
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { City } from "../libs/types";
 import { API_URL_BASE } from "../libs/api";
 
 type CitiesContextType = {
   cities: City[];
   setCities: React.Dispatch<React.SetStateAction<City[]>>;
-}
+};
 
 const CitiesContext = createContext<CitiesContextType | undefined>(undefined);
 
@@ -15,10 +21,7 @@ export function useCities() {
   return context;
 }
 
-export function CitiesProvider({
-  children
-}: PropsWithChildren
-) {
+export function CitiesProvider({ children }: PropsWithChildren) {
   const [cities, setCities] = useState<City[]>([]);
 
   async function fetchCities() {
@@ -34,7 +37,7 @@ export function CitiesProvider({
 
   useEffect(() => {
     fetchCities();
-  }, [])
+  }, []);
 
   return (
     <CitiesContext.Provider value={{ cities, setCities }}>

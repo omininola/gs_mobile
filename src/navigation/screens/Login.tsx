@@ -12,56 +12,55 @@ import { useUser } from "../../context/UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Login() {
-    const { user, setUser } = useUser();
-    const navigation = useNavigation();
-  
-    useEffect(() => {
-      if (user) navigation.navigate("MainTabs");
-    }, [user])
-  
-    const [loading, setLoading] = useState<boolean>(false);
-    const [message, setMessage] = useState<string>("");
-    const [userLogin, setUserLogin] = useState<UserLogin>({
-      email: "",
-      senha: "",
-    });
-  
-    async function handleSubmit() {
-      setLoading(true);
+  const { user, setUser } = useUser();
+  const navigation = useNavigation();
 
-      try {
-        const res = await fetch(
-          `${API_URL_BASE}/usuarios/login`,
-          {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userLogin)
-          }
+  useEffect(() => {
+    if (user) navigation.navigate("MainTabs");
+  }, [user]);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [userLogin, setUserLogin] = useState<UserLogin>({
+    email: "",
+    senha: "",
+  });
+
+  async function handleSubmit() {
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_URL_BASE}/usuarios/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userLogin),
+      });
+
+      if (res.ok) {
+        setMessage(
+          "Login efetuado com sucesso, em breve você será redirecionado para a aba de relatórios!"
         );
-    
-        if (res.ok) {
-          setMessage("Login efetuado com sucesso, em breve você será redirecionado para a aba de relatórios!");
-  
-          const data: User = await res.json();
-          await AsyncStorage.setItem("user", JSON.stringify(data));
-          setUser(data);
-  
-          navigation.navigate("MainTabs");
-        } else {
-          throw new Error(await res.text());
-        }
-      } catch(err) {
-        setMessage("Não foi possível entrar com o usuário");
-        console.log(err);
-      } finally {
-        setLoading(false);
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
+
+        const data: User = await res.json();
+        await AsyncStorage.setItem("user", JSON.stringify(data));
+        setUser(data);
+
+        navigation.navigate("MainTabs");
+      } else {
+        throw new Error(await res.text());
       }
+    } catch (err) {
+      setMessage("Não foi possível entrar com o usuário");
+      console.log(err);
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
     }
+  }
 
   return (
     <View>
@@ -79,7 +78,7 @@ export function Login() {
           keyboardType="email-address"
           autoCapitalize="none"
           autoComplete="email"
-          onChangeText={(email) => setUserLogin(prev => ({...prev, email}))}
+          onChangeText={(email) => setUserLogin((prev) => ({ ...prev, email }))}
         />
 
         <Input
@@ -88,12 +87,12 @@ export function Login() {
           secureTextEntry
           autoCapitalize="none"
           autoComplete="password"
-          onChangeText={(senha) => setUserLogin(prev => ({...prev, senha}))}
+          onChangeText={(senha) => setUserLogin((prev) => ({ ...prev, senha }))}
         />
 
         <Button
           disabled={loading}
-          style={loading && { opacity: .5 }}
+          style={loading && { opacity: 0.5 }}
           color={loading ? "gray" : "green"}
           onPress={loading ? undefined : handleSubmit}
         >
@@ -126,5 +125,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 4,
-  }
+  },
 });

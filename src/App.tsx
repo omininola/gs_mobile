@@ -1,14 +1,12 @@
-import { Assets as NavigationAssets } from '@react-navigation/elements';
-import { Asset } from 'expo-asset';
-import * as SplashScreen from 'expo-splash-screen';
-import * as React from 'react';
-import { Navigation } from './navigation';
-import { UserProvider } from './context/UserContext';
-import { CitiesProvider } from './context/CitiesContext';
+import { Assets as NavigationAssets } from "@react-navigation/elements";
+import { Asset } from "expo-asset";
+import * as SplashScreen from "expo-splash-screen";
+import * as React from "react";
+import { Navigation } from "./navigation";
+import { UserProvider } from "./context/UserContext";
+import { CitiesProvider } from "./context/CitiesContext";
 
-Asset.loadAsync([
-  ...NavigationAssets,
-]);
+Asset.loadAsync([...NavigationAssets]);
 
 SplashScreen.preventAutoHideAsync();
 
@@ -18,10 +16,10 @@ export function App() {
       <CitiesProvider>
         <Navigation
           linking={{
-            enabled: 'auto',
+            enabled: "auto",
             prefixes: [
               // Change the scheme to match your app's scheme defined in app.json
-              'helloworld://',
+              "helloworld://",
             ],
           }}
           onReady={() => {

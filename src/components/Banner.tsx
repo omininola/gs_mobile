@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 export default function Banner({
   title,
-  imageUri
+  imageUri,
 }: {
   title: string;
   imageUri: string;
@@ -18,10 +18,7 @@ export default function Banner({
           </View>
         }
       >
-        <Image
-          style={styles.image}
-          source={{ uri: imageUri }}
-        />
+        <Image style={styles.image} source={{ uri: imageUri }} />
       </MaskedView>
     </View>
   );
@@ -49,5 +46,5 @@ const styles = StyleSheet.create({
     fontSize: 64,
     fontWeight: 900,
     textTransform: "uppercase",
-  }
+  },
 });

@@ -1,11 +1,17 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
-import { User } from "../libs/types"
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { User } from "../libs/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type UserContextType = {
   user: User | undefined;
   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
-}
+};
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -15,10 +21,7 @@ export function useUser() {
   return context;
 }
 
-export function UserProvider({
-  children
-}: PropsWithChildren
-) {
+export function UserProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<User | undefined>(undefined);
 
   async function fetchUser() {
@@ -35,7 +38,7 @@ export function UserProvider({
 
   useEffect(() => {
     fetchUser();
-  }, [])
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
