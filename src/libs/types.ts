@@ -36,3 +36,12 @@ export type City = {
   id: number;
   nome: string;
 }
+
+export type ThingSpeakFeed = {
+  entry_id: number;
+  created_at: string;
+  field1: string,
+  field2: string,
+  field3: string,
+  field4: string,
+}
