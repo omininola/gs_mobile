@@ -7,18 +7,29 @@ import { THING_SPEAK_API } from "../../libs/api";
 import { ThingSpeakFeed } from "../../libs/types";
 import { LineChart } from "react-native-chart-kit";
 import DefaultText from "../../components/DefaultText";
+import { getFormatedTime } from "../../libs/utils";
+import { chartColors, chartConfig } from "../../libs/chart";
 
 export function Dashboard() {
   const [feeds, setFeeds] = useState<ThingSpeakFeed[]>([]);
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function fetchThingSpeak() {
+    setLoading(true);
+
     try {
       const res = await fetch(THING_SPEAK_API);
       const data = await res.json();
       setFeeds(data.feeds);
     } catch (err) {
+      setMessage("Não foi possível se conectar com o ThingSpeak");
       console.log(err);
     } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
     }
   }
 
@@ -26,62 +37,48 @@ export function Dashboard() {
     fetchThingSpeak();
   }, []);
 
-  const colors = {
-    temperature: "rgba(255, 99, 132, 1)",
-    humidity: "rgb(200, 255, 99)",
-    airQuality: "rgb(99, 232, 255)",
-    fireLevel: "rgb(248, 78, 211)",
-  };
-
   const chartData = {
-    labels: feeds.map((feed) => {
-      const date = new Date(feed.created_at);
-      const hour = date.getHours().toString().padEnd(2, "0");
-      const mins = date.getMinutes().toString().padEnd(2, "0");
-      const timeString = hour.concat(":", mins);
-      return timeString;
-    }),
-
+    labels: feeds.map((feed) => getFormatedTime(feed.created_at)),
     datasets: [
       {
         data: feeds.map((feed) => parseFloat(feed.field1 || "0")),
-        color: () => colors.temperature,
+        color: () => chartColors.temperature,
         strokeWidth: 2,
       },
       {
         data: feeds.map((feed) => parseFloat(feed.field2 || "0")),
-        color: () => colors.humidity,
+        color: () => chartColors.humidity,
         strokeWidth: 2,
       },
       {
         data: feeds.map((feed) => parseFloat(feed.field3 || "0")),
-        color: () => colors.airQuality,
+        color: () => chartColors.airQuality,
         strokeWidth: 2,
       },
       {
         data: feeds.map((feed) => parseFloat(feed.field4 || "0")),
-        color: () => colors.fireLevel,
+        color: () => chartColors.fireLevel,
         strokeWidth: 2,
       },
     ],
   };
 
-  const chartConfig = {
-    backgroundColor: "#fff",
-    backgroundGradientFrom: "#fff",
-    backgroundGradientTo: "#fff",
-    decimalPlaces: 2,
-    color: () => "rgba(0, 0, 0, 1)",
-    labelColor: () => "rgba(0, 0, 0, 1)",
-    style: {
-      borderRadius: 16,
-    },
-    propsForDots: {
-      r: "3",
-      strokeWidth: "1",
-      stroke: "#000",
-    },
-  };
+  if (loading) {
+    return (
+      <View>
+        <Banner
+          title="Dashboard"
+          imageUri="https://t4.ftcdn.net/jpg/04/94/94/33/360_F_494943379_C1DTG0LAHw2a0wmSeZDnd51dBLobHNR1.jpg"
+        />
+
+        <Container>
+          <Button screen="Home">Voltar para a Home</Button>
+
+          <DefaultText>Carregando...</DefaultText>
+        </Container>
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -93,49 +90,11 @@ export function Dashboard() {
       <Container>
         <Button screen="Home">Voltar para a Home</Button>
 
+        {message && <DefaultText>{message}</DefaultText>}
+
         {feeds.length > 0 && (
           <View>
-            <View style={styles.legendContainer}>
-              <View style={styles.legendField}>
-                <View
-                  style={[
-                    styles.legendDot,
-                    { backgroundColor: colors.temperature },
-                  ]}
-                />
-                <DefaultText>Temperatura</DefaultText>
-              </View>
-
-              <View style={styles.legendField}>
-                <View
-                  style={[
-                    styles.legendDot,
-                    { backgroundColor: colors.humidity },
-                  ]}
-                />
-                <DefaultText>Umidade</DefaultText>
-              </View>
-
-              <View style={styles.legendField}>
-                <View
-                  style={[
-                    styles.legendDot,
-                    { backgroundColor: colors.airQuality },
-                  ]}
-                />
-                <DefaultText>Qualidade do Ar</DefaultText>
-              </View>
-
-              <View style={styles.legendField}>
-                <View
-                  style={[
-                    styles.legendDot,
-                    { backgroundColor: colors.fireLevel },
-                  ]}
-                />
-                <DefaultText>Nível de Fogo</DefaultText>
-              </View>
-            </View>
+            <Legend />
 
             <LineChart
               data={chartData}
@@ -152,6 +111,26 @@ export function Dashboard() {
         )}
       </Container>
     </ScrollView>
+  );
+}
+
+function Legend() {
+  return (
+    <View style={styles.legendContainer}>
+      <LegendField title="Temperatura" color={chartColors.temperature} />
+      <LegendField title="Umidade" color={chartColors.humidity} />
+      <LegendField title="Qualidade do Ar" color={chartColors.airQuality} />
+      <LegendField title="Nível de Fogo" color={chartColors.fireLevel} />
+    </View>
+  );
+}
+
+function LegendField({ title, color }: { title: string; color: string }) {
+  return (
+    <View style={styles.legendField}>
+      <View style={[styles.legendDot, { backgroundColor: color }]} />
+      <DefaultText>{title}</DefaultText>
+    </View>
   );
 }
 

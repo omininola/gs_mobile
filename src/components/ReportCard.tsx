@@ -2,22 +2,9 @@ import { StyleSheet, View } from "react-native";
 import { Report } from "../libs/types";
 import DefaultText from "./DefaultText";
 import Icon from "react-native-vector-icons/FontAwesome6";
+import { getFormatedDate, getFormatedTime } from "../libs/utils";
 
 export default function ReportCard({ report }: { report: Report }) {
-  function parseDate(dateString: string) {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear().toString();
-    const hour = date.getHours().toString().padStart(2, "0");
-    const mins = date.getMinutes().toString().padStart(2, "0");
-
-    return {
-      date: day.concat("/", month, "/", year),
-      time: hour.concat(":", mins),
-    };
-  }
-
   return (
     <View style={styles.card}>
       <View style={styles.cardSection}>
@@ -40,12 +27,12 @@ export default function ReportCard({ report }: { report: Report }) {
       <View style={styles.cardSection}>
         <View style={styles.cardField}>
           <Icon name="calendar-day" size={24} />
-          <DefaultText>{parseDate(report.data).date}</DefaultText>
+          <DefaultText>{getFormatedDate(report.data)}</DefaultText>
         </View>
 
         <View style={styles.cardField}>
           <Icon name="clock" size={24} />
-          <DefaultText>{parseDate(report.data).time}</DefaultText>
+          <DefaultText>{getFormatedTime(report.data)}</DefaultText>
         </View>
       </View>
 
