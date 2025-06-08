@@ -13,6 +13,16 @@
 
 ## Descrição 
 
+Desenvolvemos um aplicativo mobile em React Native voltado para o relato e monitoramento de incêndios e queimadas. O sistema permite que usuários façam cadastro, login e publiquem relatórios de ocorrências, com possibilidade de filtrar por cidade ou visualizar apenas seus próprios relatos.
+
+Além disso, o app conta com um dashboard em tempo real, alimentado por dados do ThingSpeak, onde gráficos mostram informações captadas por sensores embarcados em drones que sobrevoam áreas críticas. Esses drones são capazes de gerar relatórios automáticos, otimizando a identificação e resposta a desastres ambientais.
+
+A aplicação consome uma REST API desenvolvida com Spring Boot, que se comunica com um banco de dados Oracle contendo tabelas interligadas como: Usuários, Relatórios, Drones, Sensores, Cidades, Estados e Países.
+
+Combinando dados manuais e automáticos, o sistema visa acelerar a detecção de incêndios e fornecer informações valiosas para tomada de decisão por autoridades e cidadãos.
+
+---
+
 ## Instruções
 
 ### Instalação
