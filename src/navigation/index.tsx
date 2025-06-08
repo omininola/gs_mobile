@@ -10,7 +10,7 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import NotFound from './screens/NotFound';
 import Register from './screens/Register';
-import { ReportCreateScreen } from './screens/ReportCreate';
+import ReportCreateScreen from './screens/ReportCreate';
 import Reports from './screens/Reports';
 import UserScreen from './screens/User';
 

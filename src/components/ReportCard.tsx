@@ -9,12 +9,17 @@ export default function ReportCard({ report }: { report: Report }) {
         <View style={styles.card}>
             <View style={styles.cardSection}>
                 <View style={styles.cardField}>
-                    <Icon name="address-card" size={24} />
                     {report.emailUsuario && (
-                        <DefaultText>{report.emailUsuario}</DefaultText>
+                        <>
+                            <Icon name="address-card" size={24} />
+                            <DefaultText>{report.emailUsuario}</DefaultText>
+                        </>
                     )}
                     {report.modeloDrone && (
-                        <DefaultText>{report.modeloDrone}</DefaultText>
+                        <>
+                            <Icon name="android" size={24} />
+                            <DefaultText>{report.modeloDrone}</DefaultText>
+                        </>
                     )}
                 </View>
 

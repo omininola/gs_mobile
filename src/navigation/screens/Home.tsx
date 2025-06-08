@@ -5,7 +5,7 @@ import { useUser } from '@/context/UserContext';
 import { Button } from '@react-navigation/elements';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
-import { ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 
 export default function Home() {
     const { user, token } = useUser();
@@ -16,7 +16,7 @@ export default function Home() {
     }, [user, token]);
 
     return (
-        <ScrollView>
+        <View>
             <Banner
                 title="Home"
                 imageUri="https://img.freepik.com/fotos-gratis/pessoas-empilhando-as-maos-juntas-no-parque_53876-63293.jpg?semt=ais_hybrid&w=740"
@@ -44,7 +44,7 @@ export default function Home() {
             </Container>
 
             <StatusBar barStyle="default" />
-        </ScrollView>
+        </View>
     );
 }
 

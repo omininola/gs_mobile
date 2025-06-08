@@ -1,25 +1,24 @@
+import { City } from '@/libs/types';
 import { Picker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-export default function Dropdown<T>({
+export default function Dropdown({
     label,
     value,
     data,
     placeholder,
+    defaultItem,
     onSelect,
-    defaultLabel,
-    defaultValue,
 }: {
-    label: keyof T;
-    value: keyof T;
-    data: T[];
+    label: keyof City;
+    value: keyof City;
+    data: City[];
     placeholder?: string;
-    onSelect?: (item: T, index: number) => void;
-    defaultLabel?: string;
-    defaultValue?: any;
+    defaultItem?: boolean;
+    onSelect?: (item: City, index: number) => void;
 }) {
-    const [selectedValue, setSelectedValue] = useState(defaultValue ?? '');
+    const [selectedValue, setSelectedValue] = useState('');
 
     return (
         <View style={styles.pickerContainer}>
@@ -28,22 +27,30 @@ export default function Dropdown<T>({
                 onValueChange={(itemValue, itemIndex) => {
                     setSelectedValue(itemValue);
                     const selectedItem = data.find(
-                        (item: T) => item[value] === itemValue,
+                        (item: City) => item[value] === itemValue,
                     );
+                    if (!selectedItem && onSelect && defaultItem) {
+                        const defaultItem: City = {
+                            id: 0,
+                            nome: '',
+                        };
+
+                        onSelect(defaultItem, -1);
+                    }
                     if (selectedItem && onSelect)
                         onSelect(selectedItem, itemIndex);
                 }}
             >
                 {placeholder && (
-                    <Picker.Item label={placeholder} value="" enabled={false} />
+                    <Picker.Item
+                        label={placeholder}
+                        value={''}
+                        enabled={false}
+                    />
                 )}
 
-                {defaultLabel && (
-                    <Picker.Item
-                        key={defaultValue}
-                        label={defaultLabel}
-                        value={defaultValue}
-                    />
+                {defaultItem && (
+                    <Picker.Item label={'Todas as cidades'} value={''} />
                 )}
 
                 {data.map((item, idx) => (

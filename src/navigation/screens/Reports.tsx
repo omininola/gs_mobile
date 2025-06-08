@@ -11,7 +11,8 @@ import { City, Report } from '@/libs/types';
 import { Button } from '@react-navigation/elements';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 
 export default function Reports() {
     const { user, setUser, token, setToken } = useUser();
@@ -130,7 +131,6 @@ export default function Reports() {
 }
 
 function Filters({
-    cityFilter,
     setCityFilter,
     userFilter,
     setUserFilter,
@@ -182,13 +182,12 @@ function Filters({
             <DefaultText>Filtros</DefaultText>
 
             <View style={styles.filterSection}>
-                <Dropdown<City>
+                <Dropdown
                     label="nome"
                     value="id"
                     data={cities}
                     placeholder="Selecione uma cidade"
-                    defaultValue={cityFilter}
-                    defaultLabel="Todas as cidades"
+                    defaultItem={true}
                     onSelect={(city) => setCityFilter(city.nome)}
                 />
 

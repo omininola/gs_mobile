@@ -1,19 +1,19 @@
+import Banner from '@/components/Banner';
+import Container from '@/components/Container';
+import DefaultText from '@/components/DefaultText';
+import Dropdown from '@/components/Dropdown';
+import Input from '@/components/Input';
+import Title from '@/components/Title';
+import { useCities } from '@/context/CitiesContext';
+import { useUser } from '@/context/UserContext';
+import { API_URL_BASE } from '@/libs/api';
+import { City, ReportCreate } from '@/libs/types';
 import { Button } from '@react-navigation/elements';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Banner from '../../components/Banner';
-import Container from '../../components/Container';
-import DefaultText from '../../components/DefaultText';
-import Dropdown from '../../components/Dropdown';
-import Input from '../../components/Input';
-import Title from '../../components/Title';
-import { useCities } from '../../context/CitiesContext';
-import { useUser } from '../../context/UserContext';
-import { API_URL_BASE } from '../../libs/api';
-import { City, ReportCreate } from '../../libs/types';
 
-export function ReportCreateScreen() {
+export default function ReportCreateScreen() {
     const { user, setUser, token, setToken } = useUser();
     const navigation = useNavigation();
 
@@ -115,12 +115,11 @@ export function ReportCreateScreen() {
                 {message && <DefaultText>{message}</DefaultText>}
 
                 <View style={styles.form}>
-                    <Dropdown<City>
+                    <Dropdown
                         label="nome"
                         value="id"
                         data={cities}
                         placeholder="Selecione uma cidade"
-                        defaultValue={report.cidadeId}
                         onSelect={(city) =>
                             setReport((prev) => ({
                                 ...prev,

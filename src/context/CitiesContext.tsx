@@ -29,8 +29,8 @@ export function CitiesProvider({ children }: PropsWithChildren) {
         try {
             const res = await fetch(`${API_URL_BASE}/cidades`);
             const data = await res.json();
-            const cities = data.content;
-            setCities(cities);
+            const citiesAsync = data.content;
+            setCities(citiesAsync);
         } catch (err) {
             console.log(err);
         }
